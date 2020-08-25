@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Segment, Header, Form, Button } from 'semantic-ui-react';
 import cuid from 'cuid';
+import { Link } from 'react-router-dom';
 
-export default function EventForm({setFormOpen, setEvents, createEvent, selectedEvent, updateEvent}) {
+export default function EventForm({setFormOpen, createEvent, selectedEvent, updateEvent}) {
     const intialValues = selectedEvent ?? {
         title: '',
         category: '',
@@ -47,7 +48,7 @@ export default function EventForm({setFormOpen, setEvents, createEvent, selected
                     <input type='date' placeholder='Date' name='date' value={values.date} onChange={e => handelInutChange(e)}/>
                 </Form.Field>
                 <Button type='submit' floated='right' positive content='Submit'/>
-                <Button onClick={() => setFormOpen()} floated='right' content='Cancel'/>
+                <Button as={Link} to='/events' floated='right' content='Cancel'/>
             </Form>
         </Segment>
     )
