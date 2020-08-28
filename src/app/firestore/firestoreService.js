@@ -30,28 +30,37 @@ export function listenToEventFromFirestore(eventId) {
 }
 
 export function addEventToFirestore(event) {
-    return db.collection('events').add({
-        ...event,
-        hostedBy: 'Diana',
-        hostPhotoURL: 'https://randomuser.me/api/portraits/women/22.jpg',
-        attendees: firebase.firestore.FieldValue.arrayUnion({
-            id: cuid(),
-            displayName: 'Diana',
-            photoURL: 'https://randomuser.me/api/portraits/women/22.jpg'
-        })
-    })
+	return db.collection('events').add({
+		...event,
+		hostedBy: 'Diana',
+		hostPhotoURL: 'https://randomuser.me/api/portraits/women/22.jpg',
+		attendees: firebase.firestore.FieldValue.arrayUnion({
+			id: cuid(),
+			displayName: 'Diana',
+			photoURL: 'https://randomuser.me/api/portraits/women/22.jpg',
+		}),
+	});
 }
 
 export function updateEventFromFirestore(event) {
-    return db.collection('events').doc(event.id).update(event);
+	return db.collection('events').doc(event.id).update(event);
 }
 
-export function deleteEventFromFirestore(eventId){
-    return db.collection('events').doc(eventId).delete();
+export function deleteEventFromFirestore(eventId) {
+	return db.collection('events').doc(eventId).delete();
 }
 
-export function cancelEventToggle(event){
-    return db.collection('events').doc(event.id).update({
-        isCancelled: !event.isCancelled
-    })
+export function cancelEventToggle(event) {
+	return db.collection('events').doc(event.id).update({
+		isCancelled: !event.isCancelled,
+	});
+}
+
+export function setUserProfileData(user) {
+	return db.collection('users').doc(user.uid).set({
+		displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL || null,
+		createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+	});
 }
